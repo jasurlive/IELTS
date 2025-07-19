@@ -30,7 +30,7 @@ const socialLinks = [
   },
 
   {
-    href: "https://t.me/jasurjacob_bot",
+    href: "https://t.me/jasurlive_bot",
     icon: FaTelegram,
     className: "social-icon",
   },
