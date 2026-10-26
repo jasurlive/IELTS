@@ -22,9 +22,10 @@
   z-index: 10;
   display: flex;
   overflow: hidden;
-  background: Canvas;
-  color: CanvasText;
-  border: 0 solid color-mix(in srgb, currentColor 15%, transparent);
+  background: var(--bg-elev);
+  color: var(--text);
+  border: 0 solid var(--border);
+  box-shadow: var(--shadow);
 }
 
 .menu-item,
@@ -48,12 +49,13 @@
 
 .menu-item:hover,
 .menu-toggle:hover {
-  background: color-mix(in srgb, currentColor 10%, transparent);
+  background: var(--hover);
+  color: var(--text-strong);
 }
 
 .menu-item.active {
   color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  background: var(--accent-soft);
   box-shadow: inset 3px 0 var(--accent);
 }
 

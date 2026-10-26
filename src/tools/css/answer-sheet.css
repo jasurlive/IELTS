@@ -28,12 +28,12 @@
 
 .sheet-row.right .input {
   border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  background: var(--accent-soft);
 }
 
 .sheet-row.wrong .input {
   border-color: var(--danger);
-  background: color-mix(in srgb, var(--danger) 8%, var(--surface));
+  background: color-mix(in srgb, var(--danger) 10%, var(--bg-elev));
 }
 
 .sheet-num { grid-area: num; }
@@ -47,7 +47,7 @@
   height: 30px;
   border: 1px solid var(--border);
   border-radius: 6px;
-  background: var(--surface);
+  background: var(--bg-elev);
   color: var(--muted);
   font-size: 1rem;
 }
@@ -60,13 +60,13 @@
 .tick-right.on {
   border-color: var(--accent);
   background: var(--accent);
-  color: var(--bg);
+  color: #fff;
 }
 
 .tick-wrong.on {
   border-color: var(--danger);
   background: var(--danger);
-  color: var(--bg);
+  color: #fff;
 }
 
 .sheet-key {
@@ -120,7 +120,7 @@
   padding: 0.45rem 1rem;
   border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  background: var(--accent-soft);
   font-size: 1.05rem;
 }
 

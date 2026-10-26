@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
 import '../tools/css/reset.css'
+import '../tools/css/theme.css'
 import '../tools/css/page.css'
 import '../tools/css/ui.css'
 import Layout from '../tools/components/Layout'

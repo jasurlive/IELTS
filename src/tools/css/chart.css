@@ -9,12 +9,12 @@
   --s6: #008300;
   --s7: #6250d6;
   --s8: #e34948;
-  --map-water: #cfe3f5;
+  --map-water: #cfe0f7;
   --map-beach: #f3e6c4;
-  --map-green: #d5ead2;
-  --map-road: #cfd2cd;
+  --map-green: #d4ead6;
+  --map-road: #cdd4df;
   --map-building: #ffffff;
-  --map-parking: #e7e7f3;
+  --map-parking: #e4e8f3;
 }
 
 :root[data-theme='dark'] {
@@ -26,12 +26,12 @@
   --s6: #008300;
   --s7: #9085e9;
   --s8: #e66767;
-  --map-water: #1d3a55;
+  --map-water: #173a66;
   --map-beach: #4a4230;
-  --map-green: #23402a;
-  --map-road: #3a3f3c;
-  --map-building: #2a2f2c;
-  --map-parking: #312f48;
+  --map-green: #1d3b2e;
+  --map-road: #2a3346;
+  --map-building: #1a2236;
+  --map-parking: #2a2d52;
 }
 
 .chart {
@@ -41,7 +41,7 @@
   padding: 0.75rem 1rem;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: var(--surface);
+  background: var(--bg-elev);
 }
 
 .chart-title {
@@ -95,12 +95,12 @@
 }
 
 .chart-ring {
-  stroke: var(--surface);
+  stroke: var(--bg-elev);
   stroke-width: 2;
 }
 
 .chart-hover-band {
-  fill: color-mix(in srgb, var(--text) 6%, transparent);
+  fill: var(--hover);
 }
 
 .chart-tooltip {
@@ -111,8 +111,8 @@
   padding: 0.5rem 0.65rem;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--surface);
-  box-shadow: 0 4px 16px rgb(0 0 0 / 0.12);
+  background: var(--bg-elev);
+  box-shadow: var(--shadow);
   font-size: 0.8rem;
   pointer-events: none;
 }
@@ -181,7 +181,7 @@
 }
 
 .chart-table th {
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  background: var(--accent-soft);
   font-weight: 600;
 }
 
@@ -209,7 +209,7 @@
   padding: 0.3rem 0.75rem;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+  background: var(--accent-soft);
   font-size: 0.9rem;
   line-height: 1.35;
 }
@@ -233,7 +233,7 @@
   height: 1.5rem;
   border-radius: 50%;
   background: var(--accent);
-  color: var(--surface);
+  color: #fff;
   font-size: 0.8rem;
   font-weight: 700;
 }
@@ -264,7 +264,7 @@
   border-radius: 8px;
 }
 
-.chart-map-bg { fill: var(--surface); }
+.chart-map-bg { fill: var(--bg-elev); }
 .map-water { fill: var(--map-water); }
 .map-beach { fill: var(--map-beach); }
 .map-green { fill: var(--map-green); }

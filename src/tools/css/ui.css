@@ -53,7 +53,7 @@
   padding: 0.4rem 0.9rem;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--surface);
+  background: var(--bg-elev);
   font-size: 0.9rem;
   white-space: nowrap;
 }
@@ -70,12 +70,12 @@
 .btn-primary {
   border-color: var(--accent);
   background: var(--accent);
-  color: var(--bg);
+  color: #fff;
   font-weight: 600;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--accent) 85%, var(--text));
+  background: var(--accent-hover);
 }
 
 .btn-danger {
@@ -104,7 +104,7 @@
 }
 
 .icon-button:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--text) 8%, transparent);
+  background: var(--hover);
   color: var(--text);
 }
 
@@ -117,7 +117,7 @@
   padding: 0.4rem 0.7rem;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--surface);
+  background: var(--bg-elev);
 }
 
 .input:focus {
@@ -148,14 +148,14 @@ textarea.input {
   padding: 0.1rem 0.55rem;
   border-radius: 999px;
   background: var(--accent);
-  color: var(--bg);
+  color: #fff;
   font-size: 0.75rem;
   font-weight: 600;
   white-space: nowrap;
 }
 
 .tag-soft {
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  background: var(--accent-soft);
   color: var(--accent);
 }
 
@@ -164,7 +164,7 @@ textarea.input {
   padding: 3px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: var(--surface);
+  background: var(--bg-elev);
 }
 
 .segmented button {
@@ -178,8 +178,8 @@ textarea.input {
 }
 
 .segmented button.active {
-  background: color-mix(in srgb, var(--accent) 16%, transparent);
-  color: var(--text);
+  background: var(--accent-soft);
+  color: var(--accent);
   font-weight: 600;
 }
 
@@ -200,7 +200,7 @@ textarea.input {
   padding: 0.9rem 1rem;
   border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  background: var(--accent-soft);
 }
 
 .notice-actions {
@@ -235,7 +235,7 @@ textarea.input {
   padding: 0.2rem 0.4rem 0.2rem 0.8rem;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: var(--surface);
+  background: var(--bg-elev);
 }
 
 .timer-time {

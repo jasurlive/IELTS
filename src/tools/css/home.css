@@ -45,7 +45,7 @@
   padding: 1rem;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: var(--surface);
+  background: var(--bg-elev);
 }
 
 .home-stats strong {
@@ -74,12 +74,13 @@
   padding: 1.1rem;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: var(--surface);
+  background: var(--bg-elev);
   transition: border-color 0.15s, transform 0.15s;
 }
 
 .home-card:hover {
   border-color: var(--accent);
+  box-shadow: var(--shadow);
   transform: translateY(-2px);
 }
 
@@ -95,7 +96,7 @@
   height: 40px;
   margin-bottom: 0.25rem;
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  background: var(--accent-soft);
   color: var(--accent);
   font-size: 1.25rem;
 }
