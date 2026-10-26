@@ -1,0 +1,317 @@
+/* writing: practice library, task workspace, real test, history */
+
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  align-content: start;
+  gap: 0.9rem;
+}
+
+.task-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.task-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.task-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.task-card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.done {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.filters-search {
+  flex: 1 1 200px;
+}
+
+/* workspace: question paper left, answer right, each scrolls on its own (like the CD exam) */
+.workspace {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  min-width: 0;
+}
+
+.workspace-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.workspace-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 1rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workspace-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  flex: 1;
+  min-height: 0;
+}
+
+.task-paper,
+.workspace-answer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 0;
+  padding: 0.75rem 1.25rem;
+  overflow-y: auto;
+}
+
+.task-paper {
+  border-right: 1px solid var(--border);
+}
+
+.task-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.task-meta-time {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.task-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--text);
+  font-weight: 600;
+  font-style: italic;
+}
+
+.task-charts,
+.task-charts-multi {
+  display: grid;
+  gap: 0.75rem;
+}
+
+/* mixed tasks: charts side by side when the paper is wide enough */
+.task-charts-multi {
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  align-items: start;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 320px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.editor:focus-within {
+  border-color: var(--accent);
+}
+
+.editor-input {
+  flex: 1;
+  padding: 1rem;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1.7;
+  resize: none;
+}
+
+.editor-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.editor-progress {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.editor-progress span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.2s;
+}
+
+.workspace-answer > .btn-primary {
+  align-self: flex-end;
+}
+
+@media (max-width: 900px) {
+  .workspace {
+    height: auto;
+  }
+
+  .workspace-split {
+    grid-template-columns: 1fr;
+  }
+
+  .task-paper {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .workspace-bar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+}
+
+/* real test */
+.rules {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.rules li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rules li:not(:first-child)::before {
+  content: '•';
+  width: 1em;
+  text-align: center;
+  color: var(--accent);
+}
+
+.result-list,
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.result-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.result-title {
+  flex: 1;
+}
+
+/* history */
+.history {
+  align-content: start;
+}
+
+.history-item details {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.history-item summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+}
+
+.history-title {
+  flex: 1;
+  font-weight: 500;
+}
+
+.history-date {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.history-item details[open] {
+  padding-bottom: 1rem;
+}
+
+.history-item details > :not(summary) {
+  margin: 0 1rem;
+}
+
+.history-answer {
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.history-answer-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.history-answer-head a {
+  color: var(--accent);
+}
+
+.history-text {
+  white-space: pre-wrap;
+  color: var(--text);
+}

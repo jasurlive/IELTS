@@ -1,18 +1,25 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CD IELTS Preparation Website</title>
-  <meta name="description" content="CD IELTS Preparation is an online platform which provides a tool for the CD IELTS exam. 
-  CD IELTS WRITING, CD IELTS LISTENING & READING." />
-</head>
-
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IELTS Live: CD IELTS practice</title>
+    <meta
+      name="description"
+      content="Free computer-delivered IELTS practice: Cambridge-style Academic Writing Task 1 graphs and Task 2 essays, random real tests with a timer, and a Listening & Reading answer sheet."
+    />
+    <!-- set theme before first paint so dark mode doesn't flash light -->
+    <script>
+      try {
+        document.documentElement.dataset.theme =
+          localStorage.getItem('theme') ||
+          (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/ts/main.tsx"></script>
+  </body>
 </html>

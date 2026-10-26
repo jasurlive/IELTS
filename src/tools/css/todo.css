@@ -1,0 +1,33 @@
+.todo-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.todo-form .input {
+  flex: 1;
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.todo-item .check {
+  flex: 1;
+}
+
+.todo-done .check span {
+  color: var(--muted);
+  text-decoration: line-through;
+}

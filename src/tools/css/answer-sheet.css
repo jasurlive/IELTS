@@ -1,0 +1,151 @@
+.sheet {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(10, auto);
+  gap: 0.5rem 1.25rem;
+}
+
+.sheet-row {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  grid-template-areas: "num input ticks";
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.sheet-num {
+  font-weight: 600;
+  text-align: right;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.sheet-row .input {
+  width: 100%;
+  min-height: 34px;
+}
+
+.sheet-row.right .input {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+}
+
+.sheet-row.wrong .input {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 8%, var(--surface));
+}
+
+.sheet-num { grid-area: num; }
+.sheet-row .input { grid-area: input; }
+.ticks { grid-area: ticks; display: flex; gap: 0.2rem; }
+
+.tick {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.tick:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+.tick-right.on {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.tick-wrong.on {
+  border-color: var(--danger);
+  background: var(--danger);
+  color: var(--bg);
+}
+
+.sheet-key {
+  /* sits inside the right end of the input so rows stay the same height */
+  grid-area: input;
+  justify-self: end;
+  max-width: 55%;
+  padding: 0 0.5rem;
+  pointer-events: none;
+  overflow: hidden;
+  font-size: 0.8rem;
+  color: var(--accent);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.paste-key {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+}
+
+.paste-key textarea {
+  flex: 1;
+}
+
+.sheet-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sheet-head-title {
+  flex: 1 1 260px;
+}
+
+.sheet-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.score {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 1.25rem;
+  margin-right: auto;
+  padding: 0.45rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  font-size: 1.05rem;
+}
+
+/* 4 columns x 10 rows fill the page height on laptops */
+@media (min-width: 901px) {
+  .sheet {
+    flex: 1;
+    min-height: 0;
+    grid-template-rows: repeat(10, minmax(0, 1fr));
+    align-items: center;
+    gap: 0.25rem 1.25rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .sheet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(20, auto);
+  }
+}
+
+@media (max-width: 520px) {
+  .sheet {
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+}

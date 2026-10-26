@@ -1,0 +1,292 @@
+/* Task 1 charts (components/Chart.tsx) */
+
+:root {
+  --s1: #2a78d6;
+  --s2: #eb6834;
+  --s3: #1baf7a;
+  --s4: #eda100;
+  --s5: #e87ba4;
+  --s6: #008300;
+  --s7: #6250d6;
+  --s8: #e34948;
+  --map-water: #cfe3f5;
+  --map-beach: #f3e6c4;
+  --map-green: #d5ead2;
+  --map-road: #cfd2cd;
+  --map-building: #ffffff;
+  --map-parking: #e7e7f3;
+}
+
+:root[data-theme='dark'] {
+  --s1: #3987e5;
+  --s2: #d95926;
+  --s3: #199e70;
+  --s4: #c98500;
+  --s5: #d55181;
+  --s6: #008300;
+  --s7: #9085e9;
+  --s8: #e66767;
+  --map-water: #1d3a55;
+  --map-beach: #4a4230;
+  --map-green: #23402a;
+  --map-road: #3a3f3c;
+  --map-building: #2a2f2c;
+  --map-parking: #312f48;
+}
+
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.chart-title {
+  font-weight: 600;
+  text-align: center;
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 1.1rem;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.chart-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.chart-plot {
+  position: relative;
+}
+
+.chart-plot svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.chart-grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.chart-axis {
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+
+.chart-tick {
+  font-size: 12px;
+  fill: var(--muted);
+}
+
+.chart-label {
+  font-size: 12px;
+  fill: var(--text);
+}
+
+.chart-ring {
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.chart-hover-band {
+  fill: color-mix(in srgb, var(--text) 6%, transparent);
+}
+
+.chart-tooltip {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  min-width: 160px;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.12);
+  font-size: 0.8rem;
+  pointer-events: none;
+}
+
+.chart-tooltip-row {
+  display: grid;
+  grid-template-columns: 10px 1fr auto;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.chart-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.chart-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+.chart-pies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.chart-pie {
+  flex: 1 1 200px;
+  margin-top: 0.5rem;
+  /* keep two pies + prompt inside a laptop screen */
+  max-width: min(300px, 36dvh);
+  text-align: center;
+}
+
+.chart-pie figcaption,
+.chart-map figcaption {
+  font-weight: 600;
+}
+
+.chart-pie-label {
+  font-size: 13px;
+  fill: var(--text);
+}
+
+.chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-table th,
+.chart-table td {
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  text-align: right;
+}
+
+.chart-table th:first-child,
+.chart-table td:first-child {
+  text-align: left;
+}
+
+.chart-table th {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  font-weight: 600;
+}
+
+.chart-details summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.chart-details[open] summary {
+  margin-bottom: 0.5rem;
+}
+
+.chart-process {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.chart-process li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+/* down arrow between stages */
+.chart-process li:not(:last-child)::after {
+  content: '↓';
+  position: absolute;
+  bottom: -0.9rem;
+  left: 1.45rem;
+  line-height: 1;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.chart-step {
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--surface);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.chart-process li.chart-cycle-back {
+  justify-content: center;
+  border-style: dashed;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.chart-maps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.chart-map {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: center;
+}
+
+.chart-map svg {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.chart-map-bg { fill: var(--surface); }
+.map-water { fill: var(--map-water); }
+.map-beach { fill: var(--map-beach); }
+.map-green { fill: var(--map-green); }
+.map-road { fill: var(--map-road); }
+.map-parking { fill: var(--map-parking); stroke: var(--muted); stroke-width: 0.3; stroke-dasharray: 1 1; }
+.map-building { fill: var(--map-building); stroke: var(--text); stroke-width: 0.4; }
+
+.chart-map-text {
+  font-size: 3.3px;
+  fill: var(--text);
+}
+
+.chart-map-north {
+  font-size: 3.5px;
+  font-weight: 700;
+  fill: var(--text);
+}
+
+.chart-image {
+  width: 100%;
+  max-height: calc(100dvh - 140px);
+  object-fit: contain;
+  border-radius: 10px;
+  background: #fff;
+}
