@@ -1,3 +1,12 @@
+/* text on accent-colored fills: white, except on charcoal where the accent is light grey */
+:root {
+  --on-accent: #fff;
+}
+
+:root[data-theme='charcoal'] {
+  --on-accent: #181818;
+}
+
 /* small shared building blocks: buttons, inputs, tags, tabs, notices */
 
 .wide-container {
@@ -70,7 +79,7 @@
 .btn-primary {
   border-color: var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   font-weight: 600;
 }
 
@@ -148,7 +157,7 @@ textarea.input {
   padding: 0.1rem 0.55rem;
   border-radius: 999px;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   font-size: 0.75rem;
   font-weight: 600;
   white-space: nowrap;

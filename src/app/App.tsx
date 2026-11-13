@@ -1,20 +1,22 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
-import '../tools/css/reset.css'
-import '../tools/css/theme.css'
-import '../tools/css/page.css'
-import '../tools/css/ui.css'
-import Layout from '../tools/components/Layout'
-import Home from '../tools/pages/Home'
-import Practice from '../tools/pages/Practice'
-import PracticeTask from '../tools/pages/PracticeTask'
-import RealTest from '../tools/pages/RealTest'
-import AnswerSheet from '../tools/pages/AnswerSheet'
-import History from '../tools/pages/History'
-import ToDo from '../tools/pages/ToDo'
-import Feedback from '../tools/pages/Feedback'
-import NotFound from '../tools/pages/NotFound'
+import '../css/reset.css'
+import '../css/theme.css'
+import '../css/page.css'
+import '../css/ui.css'
+import Layout from '../components/Layout'
+import Home from '../pages/Home'
+import Practice from '../pages/Practice'
+import PracticeTask from '../pages/PracticeTask'
+import RealTest from '../pages/RealTest'
+import AnswerSheet from '../pages/AnswerSheet'
+import History from '../pages/History'
+import ToDo from '../pages/ToDo'
+import Feedback from '../pages/Feedback'
+import Settings from '../pages/Settings'
+import Info from '../pages/Info'
+import NotFound from '../pages/NotFound'
 
-// add a page: create it in tools/pages, add a <Route> here and an item in Menu.tsx
+// add a page: create it in pages, add a <Route> here and an item in Menu.tsx
 export default function App() {
   return (
     <BrowserRouter>
@@ -28,6 +30,8 @@ export default function App() {
           <Route path="history" element={<History />} />
           <Route path="todo" element={<ToDo />} />
           <Route path="feedback" element={<Feedback />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="info" element={<Info />} />
           {/* old links */}
           <Route path="writing" element={<RealTest />} />
           <Route path="to-do-list" element={<ToDo />} />

@@ -17,7 +17,8 @@
   --map-parking: #e4e8f3;
 }
 
-:root[data-theme='dark'] {
+:root[data-theme='dark'],
+:root[data-theme='charcoal'] {
   --s1: #3987e5;
   --s2: #d95926;
   --s3: #199e70;
@@ -233,7 +234,7 @@
   height: 1.5rem;
   border-radius: 50%;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   font-size: 0.8rem;
   font-weight: 700;
 }

@@ -60,7 +60,7 @@
 .tick-right.on {
   border-color: var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .tick-wrong.on {

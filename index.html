@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>IELTS Live: CD IELTS practice</title>
     <meta
       name="description"
@@ -12,14 +12,19 @@
     <!-- set theme before first paint so dark mode doesn't flash light -->
     <script>
       try {
+        // %VITE_ENABLE_EXTRA_THEMES% is filled in by Vite from .env
+        var themes = ['light', 'dark']
+        if ('%VITE_ENABLE_EXTRA_THEMES%' !== 'false') themes.push('linen', 'fjord', 'matte', 'charcoal', 'paper')
+        var saved = localStorage.getItem('theme')
         document.documentElement.dataset.theme =
-          localStorage.getItem('theme') ||
-          (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+          themes.indexOf(saved) !== -1
+            ? saved
+            : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
       } catch {}
     </script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/ts/main.tsx"></script>
+    <script type="module" src="/src/app/main.tsx"></script>
   </body>
 </html>
