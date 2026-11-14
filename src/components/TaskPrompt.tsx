@@ -6,6 +6,16 @@ import { TASK_RULES, TASK1_TYPES, TASK2_TYPES, type Task } from "../data/types";
 // the question paper side: instructions box, then the chart(s) for Task 1
 export default function TaskPrompt({ task }: { task: Task }) {
   const rules = TASK_RULES[task.task];
+  // two graphs/tables sit side by side; diagrams, maps and graphs with long category names need the full width
+  const sideBySide =
+    task.task === 1 &&
+    task.charts.length > 1 &&
+    task.charts.every(
+      (c) =>
+        c.kind !== "process" &&
+        c.kind !== "map" &&
+        !((c.kind === "bar" || c.kind === "line") && c.categories.some((x) => x.length > 10)),
+    );
 
   return (
     <section className="task-paper">
@@ -20,16 +30,13 @@ export default function TaskPrompt({ task }: { task: Task }) {
 
       {task.task === 1 ? (
         <>
-          {/* the bundled image already shows the instructions box */}
-          {task.charts[0].kind !== "image" && (
-            <div className="task-box">
-              <p>{task.prompt}</p>
-              <p>{SUMMARISE}</p>
-            </div>
-          )}
-          <div className={task.charts.length > 1 ? "task-charts-multi" : "task-charts"}>
+          <div className="task-box">
+            <p>{task.prompt}</p>
+            <p>{SUMMARISE}</p>
+          </div>
+          <div className={sideBySide ? "task-charts-multi" : "task-charts"}>
             {task.charts.map((chart, i) => (
-              <Chart key={i} data={chart} compact={task.charts.length > 1} />
+              <Chart key={i} data={chart} compact={sideBySide} />
             ))}
           </div>
         </>

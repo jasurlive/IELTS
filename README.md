@@ -4,7 +4,7 @@ A simple place to practise computer-delivered IELTS without getting lost in 200 
 
 ## What's inside
 
-- **Writing**: 48 Academic tasks in the Cambridge format (20 Task 1 graphs, 28 Task 2 essays). Take a full 60-minute test or practise one task at a time. Drafts save as you type.
+- **Writing**: 44 Academic tasks from the Cambridge IELTS books (19 Task 1 graphs, tables, process diagrams and maps, 25 Task 2 essays), all drawn from data, no images. Take a full 60-minute test or practise one task at a time. Drafts save as you type.
 - **Listening & Reading**: an answer sheet for the Cambridge books. Type your answers, paste the key, get your band.
 - **History** of everything you've written, a small **to-do list**, and 7 themes.
 
@@ -24,7 +24,7 @@ Needs Node 20.19+.
 ## Add a task
 
 - **Task 2**: add a line to `src/data/task2.ts`.
-- **Task 1**: copy an entry in `src/data/task1.ts` and change the data.
+- **Task 1**: copy an entry in `src/data/task1.ts` and change the data. Process stages pick an icon from `src/lib/icons.ts`; maps use a 100 × 70 grid (see `MapFeature` in `src/data/types.ts`).
 
 Built on my [django-react](https://github.com/jasurlive/django-react) template.
 

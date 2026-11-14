@@ -10,6 +10,7 @@ import {
   FiBarChart2,
   FiSettings,
   FiInfo,
+  FiCheckSquare,
 } from "react-icons/fi";
 import "../css/menu.css";
 import { useTheme } from "../hooks/LOCAL/useTheme";
@@ -34,8 +35,9 @@ export default function Menu({
       href: "/answer-sheet",
       mobile: true,
     },
-    // desktop only; To-do list and Feedback are linked from Home and Info to keep the menu short
+    // desktop only; Feedback is linked from Home and Info to keep the menu short
     { label: "History", icon: <FiBarChart2 />, href: "/history" },
+    { label: "To-do", icon: <FiCheckSquare />, href: "/todo" },
     // bottom: pinned to the bottom of the sidebar on desktop, keep these last
     {
       label: "Settings",
