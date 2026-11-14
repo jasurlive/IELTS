@@ -1,3 +1,5 @@
+import type { ProcessIcon } from '../lib/icons'
+
 // shapes for the task bank (data/task1.ts, data/task2.ts)
 
 export type Series = { name: string; values: number[] }
@@ -17,6 +19,8 @@ export type BarChart = Omit<LineChart, 'kind'> & { kind: 'bar' }
 export type PieChart = {
   kind: 'pie'
   title: string
+  // set when slices are amounts (e.g. "units"), not percentages
+  unit?: string
   pies: { label: string; slices: { name: string; value: number }[] }[]
 }
 
@@ -27,32 +31,57 @@ export type TableChart = {
   rows: (string | number)[][]
 }
 
+export type ProcessStep = {
+  label: string
+  note?: string // small detail line, e.g. "24–48 hours"
+  icon?: ProcessIcon
+  inputs?: string[] // things added at this stage, e.g. ["sand", "water"]
+}
+
 export type ProcessChart = {
   kind: 'process'
   title: string
-  steps: string[]
-  cyclic?: boolean
+  steps: ProcessStep[]
+  cyclic?: boolean // drawn as a loop; last stage leads back to the first
+  center?: string // label in the middle of a cycle
 }
 
-export type MapFeature = {
-  name: string
-  type: 'building' | 'road' | 'green' | 'water' | 'parking' | 'beach'
-  // 0-100 wide, 0-70 high
-  x: number
-  y: number
-  w: number
-  h: number
-}
+// maps: coordinates are on a 100 × 70 grid, [x, y] from the top-left
+export type Pt = [number, number]
+
+export type AreaType =
+  | 'land' // an island / coast on a sea background
+  | 'sea'
+  | 'lake'
+  | 'swim' // swimming area marked in the water
+  | 'beach'
+  | 'farm'
+  | 'park'
+  | 'forest'
+  | 'housing'
+  | 'parking'
+  | 'zone' // coloured development zone, see MapChart.zones
+
+export type LineType = 'motorway' | 'mainroad' | 'road' | 'track' | 'footpath' | 'railway' | 'river' | 'pier'
+
+export type MapFeature =
+  | { kind: 'area'; type: AreaType; points: Pt[]; label?: string; at?: Pt; zone?: number; smooth?: boolean }
+  | { kind: 'line'; type: LineType; points: Pt[]; label?: string; at?: Pt; angle?: number; smooth?: boolean }
+  | { kind: 'building'; x: number; y: number; w: number; h: number; label?: string; at?: Pt; tone?: 'plain' | 'civic' | 'new' }
+  | { kind: 'houses'; points: Pt[] } // small house symbols
+  | { kind: 'trees'; points: Pt[] }
+  | { kind: 'label'; text: string; at: Pt; size?: 's' | 'm' | 'l'; italic?: boolean }
 
 export type MapChart = {
   kind: 'map'
   title: string
+  base?: 'land' | 'sea'
+  scale?: string // e.g. "100 m"
+  zones?: string[] // legend for 'zone' areas, index = zone number
   panels: { label: string; features: MapFeature[] }[]
 }
 
-export type ImageChart = { kind: 'image'; src: string; alt: string }
-
-export type Chart = LineChart | BarChart | PieChart | TableChart | ProcessChart | MapChart | ImageChart
+export type Chart = LineChart | BarChart | PieChart | TableChart | ProcessChart | MapChart
 
 export type Task1Type = 'line' | 'bar' | 'pie' | 'table' | 'process' | 'map' | 'mixed'
 export type Task2Type = 'opinion' | 'discussion' | 'advantages' | 'problem-solution' | 'two-part'

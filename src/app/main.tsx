@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
 import ErrorBoundary from '../components/ErrorBoundary'
+import { trackVisit } from './track'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -11,3 +12,5 @@ createRoot(document.getElementById('root')!).render(
     </ErrorBoundary>
   </StrictMode>,
 )
+
+trackVisit()

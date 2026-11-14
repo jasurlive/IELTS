@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useWidth } from "../hooks/LOCAL/useWidth";
+import ProcessDiagram from "./ProcessDiagram";
+import MapDiagram from "./MapDiagram";
 import type {
   BarChart,
   Chart as ChartData,
   LineChart,
-  MapChart,
   PieChart,
-  ProcessChart,
   TableChart,
 } from "../data/types";
 import "../css/chart.css";
@@ -27,20 +28,6 @@ function useChartHeight(compact = false) {
     return () => window.removeEventListener("resize", onResize);
   }, [compact]);
   return height;
-}
-
-// draw at the real pixel width so text stays 12px on phones instead of shrinking
-function useWidth(fallback = 640) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(fallback);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const ro = new ResizeObserver(([entry]) => setWidth(Math.max(300, Math.round(entry.contentRect.width))));
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-  return [ref, width] as const;
 }
 
 // line dash per series, so lines stay readable in black & white (like the exam paper)
@@ -105,6 +92,21 @@ function DataTable({ columns, rows }: { columns: string[]; rows: (string | numbe
   );
 }
 
+// long category names ("Engineered goods") go onto two lines when the column is narrow
+function wrapTick(text: string, band: number) {
+  if (text.length * 6.6 <= band - 6 || !text.includes(" ")) return [text];
+  const words = text.split(" ");
+  let best = [text];
+  let bestLen = Infinity;
+  for (let k = 1; k < words.length; k++) {
+    const a = words.slice(0, k).join(" ");
+    const b = words.slice(k).join(" ");
+    const len = Math.max(a.length, b.length);
+    if (len < bestLen) [best, bestLen] = [[a, b], len];
+  }
+  return best;
+}
+
 // axes, grid and hover columns shared by line and bar charts
 function XYChart({ data, compact, children }: { data: LineChart | BarChart; compact?: boolean; children: (y: (v: number) => number, band: number, base: number) => React.ReactNode }) {
   const [hover, setHover] = useState<number | null>(null);
@@ -134,8 +136,12 @@ function XYChart({ data, compact, children }: { data: LineChart | BarChart; comp
           ))}
           <line className="chart-axis" x1={M.l} x2={W - M.r} y1={M.t + PH} y2={M.t + PH} />
           {data.categories.map((c, i) => (
-            <text key={c} className="chart-tick" x={cx(i)} y={M.t + PH + 20} textAnchor="middle">
-              {c}
+            <text key={c} className="chart-tick" x={cx(i)} y={M.t + PH + 18} textAnchor="middle">
+              {wrapTick(c, band).map((line, li) => (
+                <tspan key={li} x={cx(i)} dy={li ? 13 : 0}>
+                  {line}
+                </tspan>
+              ))}
             </text>
           ))}
           <text className="chart-label" transform={`translate(14 ${M.t + PH / 2}) rotate(-90)`} textAnchor="middle">
@@ -261,7 +267,10 @@ function Pie({ data }: { data: PieChart }) {
           let angle = 0;
           return (
             <figure key={pie.label} className="chart-pie">
-              <figcaption>{pie.label}</figcaption>
+              <figcaption>
+                {pie.label}
+                {data.unit && <span className="chart-pie-total">Total: {fmt(total)} {data.unit}</span>}
+              </figcaption>
               <svg viewBox={`0 0 ${S} ${S}`} role="img" aria-label={`${data.title}: ${pie.label}`}>
                 {pie.slices.map((s) => {
                   const a0 = angle;
@@ -279,10 +288,10 @@ function Pie({ data }: { data: PieChart }) {
                       opacity={hover && hover !== s.name ? 0.35 : 1}
                     >
                       <path d={slicePath(S / 2, S / 2, R, a0, a1)} fill={color(idx(s.name))} className="chart-ring">
-                        <title>{`${s.name}: ${pct}%`}</title>
+                        <title>{data.unit ? `${s.name}: ${fmt(s.value)} ${data.unit} (${pct}%)` : `${s.name}: ${pct}%`}</title>
                       </path>
                       <text className="chart-tick chart-pie-label" x={lx} y={ly} dy="0.32em" textAnchor="middle">
-                        {pct}%
+                        {data.unit ? fmt(s.value) : `${pct}%`}
                       </text>
                     </g>
                   );
@@ -292,44 +301,6 @@ function Pie({ data }: { data: PieChart }) {
           );
         })}
       </div>
-    </div>
-  );
-}
-
-function Process({ data }: { data: ProcessChart }) {
-  return (
-    <ol className={`chart-process ${data.cyclic ? "chart-cycle" : ""}`}>
-      {data.steps.map((step, i) => (
-        <li key={i}>
-          <span className="chart-step">{i + 1}</span>
-          {step}
-        </li>
-      ))}
-      {data.cyclic && <li className="chart-cycle-back">↻ back to stage 1</li>}
-    </ol>
-  );
-}
-
-function MapPanels({ data }: { data: MapChart }) {
-  return (
-    <div className="chart-maps">
-      {data.panels.map((panel) => (
-        <figure key={panel.label} className="chart-map">
-          <figcaption>{panel.label}</figcaption>
-          <svg viewBox="0 0 100 70" role="img" aria-label={`${data.title}: ${panel.label}`}>
-            <rect className="chart-map-bg" x="0" y="0" width="100" height="70" />
-            {panel.features.map((f) => (
-              <g key={f.name}>
-                <rect className={`map-${f.type}`} x={f.x} y={f.y} width={f.w} height={f.h} rx={f.type === "building" ? 1 : 0} />
-                <text className="chart-map-text" x={f.x + f.w / 2} y={f.y + f.h / 2} dy="0.35em" textAnchor="middle">
-                  {f.type === "parking" ? `P ${f.name}` : f.name}
-                </text>
-              </g>
-            ))}
-            <text className="chart-map-north" x="95" y="7" textAnchor="middle">N↑</text>
-          </svg>
-        </figure>
-      ))}
     </div>
   );
 }
@@ -346,10 +317,6 @@ function seriesRows(data: LineChart | BarChart) {
 }
 
 export default function Chart({ data, compact }: { data: ChartData; compact?: boolean }) {
-  if (data.kind === "image") {
-    return <img className="chart-image" src={data.src} alt={data.alt} />;
-  }
-
   const hasData = data.kind === "line" || data.kind === "bar" || data.kind === "pie";
 
   return (
@@ -359,8 +326,8 @@ export default function Chart({ data, compact }: { data: ChartData; compact?: bo
       {data.kind === "bar" && <Bar data={data} compact={compact} />}
       {data.kind === "pie" && <Pie data={data} />}
       {data.kind === "table" && <Table data={data} />}
-      {data.kind === "process" && <Process data={data} />}
-      {data.kind === "map" && <MapPanels data={data} />}
+      {data.kind === "process" && <ProcessDiagram data={data} />}
+      {data.kind === "map" && <MapDiagram data={data} />}
       {hasData && (
         <details className="chart-details">
           <summary>Show data as a table</summary>
@@ -371,7 +338,7 @@ export default function Chart({ data, compact }: { data: ChartData; compact?: bo
                 name,
                 ...data.pies.map((p) => {
                   const v = p.slices.find((s) => s.name === name)?.value;
-                  return v === undefined ? "–" : `${v}%`;
+                  return v === undefined ? "–" : data.unit ? `${fmt(v)} ${data.unit}` : `${v}%`;
                 }),
               ])}
             />
